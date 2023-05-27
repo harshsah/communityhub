@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Component
 
 @Component
-class UserInfoImpl(
+class UserInfoDao(
 	private val repository: MongoRepository<UserInfo, String>,
 	private val mongoTemplate: MongoTemplate
 ): Dao<String, UserInfo> {
