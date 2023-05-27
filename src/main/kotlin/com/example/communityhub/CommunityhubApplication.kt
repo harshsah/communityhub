@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class CommunityHubApplication
 
 fun main(args: Array<String>) {
-
 	runApplication<CommunityHubApplication>(*args)
 }
