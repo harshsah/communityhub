@@ -8,10 +8,9 @@ Demo Project for Spring boot kotlin
 * User Registration: Users should be able to create an account on CommunityHub by providing a unique username, email address, and password.
 * User Login: Registered users should be able to log in to their accounts securely.
 * User Profiles: Each user should have a profile page that showcases their interests, activities, and contributions within the platform.
-Community Management:
 
-### Create Communities:
-* Users should be able to create their own communities based on specific topics, interests, or themes.
+### Community Management:
+* Create Communities: Users should be able to create their own communities based on specific topics, interests, or themes.
 * Join/Leave Communities: Users should have the ability to join or leave communities based on their interests and preferences. 
 * Community Discovery: Implement features to help users discover new communities based on their interests, popularity, and recommendations.
 

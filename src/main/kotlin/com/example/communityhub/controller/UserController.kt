@@ -1,9 +1,9 @@
 package com.example.communityhub.controller
 
 import com.example.communityhub.handler.Handlers
-import com.example.communityhub.handler.user.UserLoginRequest
-import com.example.communityhub.handler.user.UserRefreshTokenRequest
-import com.example.communityhub.handler.user.UserSignupRequest
+import com.example.communityhub.handler.usermanagement.UserLoginRequest
+import com.example.communityhub.handler.usermanagement.UserRefreshTokenRequest
+import com.example.communityhub.handler.usermanagement.UserSignupRequest
 import com.example.communityhub.utils.HeaderUtils
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/management")
 class UserController (
 	private val handlers: Handlers,
 	private val headerUtils: HeaderUtils,

@@ -1,4 +1,4 @@
-package com.example.communityhub.handler.user
+package com.example.communityhub.handler.usermanagement
 
 import com.example.communityhub.constant.Message
 import com.example.communityhub.controller.request.BaseRequest

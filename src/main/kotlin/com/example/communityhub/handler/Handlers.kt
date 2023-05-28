@@ -1,8 +1,8 @@
 package com.example.communityhub.handler
 
-import com.example.communityhub.handler.user.UserLoginHandler
-import com.example.communityhub.handler.user.UserRefreshTokenHandler
-import com.example.communityhub.handler.user.UserSignupHandler
+import com.example.communityhub.handler.usermanagement.UserLoginHandler
+import com.example.communityhub.handler.usermanagement.UserRefreshTokenHandler
+import com.example.communityhub.handler.usermanagement.UserSignupHandler
 import org.springframework.stereotype.Component
 
 @Component

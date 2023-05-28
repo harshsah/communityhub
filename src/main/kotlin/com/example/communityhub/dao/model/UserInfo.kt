@@ -8,16 +8,40 @@ import org.springframework.data.mongodb.core.mapping.Field
 @Document(collection = DaoConstant.COLLECTION_NAME_USER_INFO)
 data class UserInfo(
 	@Id @Field(ID) val id: String,
-	@Field(NAME) val name: String,
 	@Field(PASSWORD) val password: String,
+	@Field(USER_INFO_DATA) val userInfoData: UserInfoData?,
+	@Field(USER_INFO_CONTACT) val userInfoContact: UserInfoContact?,
 	@Field(CREATED) val created: Long,
 	@Field(UPDATED) val updated: Long,
 ) {
 	companion object {
 		private const val ID = "_id"
-		private const val NAME = "name"
 		private const val PASSWORD = "password"
+		private const val USER_INFO_DATA = "userInfoData"
+		private const val USER_INFO_CONTACT = "userInfoContact"
 		private const val CREATED = "created"
 		private const val UPDATED = "updated"
+	}
+}
+
+data class UserInfoData(
+	@Field(NAME) val name: String? = null,
+	@Field(URL) val url: String? = null,
+	@Field(ICON_IMAGE) val iconImage: String? = null,
+) {
+	companion object {
+		private const val NAME = "name"
+		private const val URL = "url"
+		private const val ICON_IMAGE = "iconImage"
+	}
+}
+
+data class UserInfoContact(
+	@Field(PHONE) val phone: String? = null,
+	@Field(EMAIL) val email: String? = null,
+) {
+	companion object {
+		private const val PHONE = "phone"
+		private const val EMAIL = "email"
 	}
 }

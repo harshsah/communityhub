@@ -1,4 +1,4 @@
-package com.example.communityhub.handler.user
+package com.example.communityhub.handler.usermanagement
 
 import com.example.communityhub.constant.Message
 import com.example.communityhub.controller.response.BaseResponse
@@ -40,8 +40,6 @@ class UserLoginHandler(
 
 		return ResponseEntity.ok(UserLoginResponse(
 			message = Message.OK,
-			id = userInfo.id,
-			name = userInfo.name,
 			sessionInfo = sessionInfo,
 		))
 	}
@@ -55,7 +53,6 @@ data class UserLoginRequest(
 
 data class UserLoginResponse(
 	override var message: String? = null,
-	val id: String? = null,
-	val name: String? = null,
-	val sessionInfo: SessionInfo? = null
+	val sessionInfo: SessionInfo? = null,
 ): BaseResponse(message)
+
