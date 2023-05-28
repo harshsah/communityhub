@@ -1,10 +1,61 @@
 package com.example.communityhub.handler.user
 
+import com.example.communityhub.constant.Message
+import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.UserInfoDao
+import com.example.communityhub.exception.badRequestException
+import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.service.JwtService
+import com.example.communityhub.service.SessionInfo
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
 class UserLoginHandler(
-	private val userInfoDao: UserInfoDao
-){
+	private val userInfoDao: UserInfoDao,
+	private val passwordEncoder: PasswordEncoder,
+	private val jwtService: JwtService,
+): AbsHandler<UserLoginRequest, UserLoginResponse>(
+	apiName = "user login",
+	errorResponseSupplier = { UserLoginResponse() }
+) {
+
+	override suspend fun perform(request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
+
+		val id = request.id ?: throw badRequestException(Message.INVALID_REQUEST)
+		val password = request.password ?: throw badRequestException(Message.INVALID_REQUEST)
+
+		val userInfo = userInfoDao.repository().findById(id)
+			.orElseThrow { badRequestException(Message.USER_NOT_FOUND) }
+
+		if (!passwordEncoder.matches(password, userInfo.password)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body(UserLoginResponse(message = Message.UNAUTHORIZED))
+		}
+
+		val sessionInfo = jwtService.getSessionInfo(userInfo)
+
+
+		return ResponseEntity.ok(UserLoginResponse(
+			message = Message.OK,
+			id = userInfo.id,
+			name = userInfo.name,
+			sessionInfo = sessionInfo,
+		))
+	}
+
 }
+
+data class UserLoginRequest(
+	val id: String?,
+	val password: String?,
+)
+
+data class UserLoginResponse(
+	override var message: String? = null,
+	val id: String? = null,
+	val name: String? = null,
+	val sessionInfo: SessionInfo? = null
+): BaseResponse(message)

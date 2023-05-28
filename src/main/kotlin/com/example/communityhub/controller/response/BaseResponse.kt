@@ -1,6 +1,6 @@
 package com.example.communityhub.controller.response
 
 open class BaseResponse(
-	var message: String?
+	open var message: String? = null
 ) {
 }

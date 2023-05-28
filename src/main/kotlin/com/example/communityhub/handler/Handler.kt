@@ -7,6 +7,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 import org.springframework.http.ResponseEntity
+import java.util.function.Supplier
 
 fun interface Handler<T, V> {
 	fun handle(request: T): ResponseEntity<V>
@@ -14,7 +15,7 @@ fun interface Handler<T, V> {
 
 abstract class AbsHandler<T,V>(
 	internal val apiName: String,
-	private val errorResponse: V?,
+	private val errorResponseSupplier: Supplier<V>?,
 	internal val log: Logger = LoggerFactory.getLogger(apiName),
 	internal val logLevel: Level = Level.INFO,
 ):Handler<T,V> {
@@ -25,9 +26,10 @@ abstract class AbsHandler<T,V>(
 		try {
 			validate(request)
 			responseEntity = runBlocking { perform(request) }
-			logDTO = LogDTO(request, null, null)
+			logDTO = LogDTO(request, responseEntity, null)
 		} catch (e: Exception) {
-			val serverException = createServerException(e);
+			val serverException = createServerException(e)
+			val errorResponse = errorResponseSupplier?.get()
 			responseEntity = serverException.createResponse(errorResponse)
 			logDTO = LogDTO(request, responseEntity, serverException)
 		}
@@ -58,11 +60,11 @@ data class LogDTO<T,V>(
 		handler.log
 			.atLevel(handler.logLevel)
 			.log("""
-				API Interceptor ${handler.apiName}
-				request $request,
-				response $responseEntity
-				exception produced ${exception != null}
-				exception $exception
-			""".trimIndent())
+				API Interceptor, ${handler.apiName} api
+					request: $request,
+					response: $responseEntity
+					exceptionProduced: ${exception != null}
+					exception: {}
+			""".trimIndent(), exception)
 	}
 }
