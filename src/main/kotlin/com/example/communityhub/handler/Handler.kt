@@ -64,7 +64,7 @@ data class LogDTO<T,V>(
 					request: $request,
 					response: $responseEntity
 					exceptionProduced: ${exception != null}
-					exception: {}
+					exception: 
 			""".trimIndent(), exception)
 	}
 }

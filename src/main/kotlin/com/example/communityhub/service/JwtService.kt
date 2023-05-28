@@ -8,12 +8,14 @@ import com.example.communityhub.constant.Message
 import com.example.communityhub.dao.model.UserInfo
 import com.example.communityhub.exception.ServerException
 import com.example.communityhub.exception.internalServerErrorException
+import com.example.communityhub.exception.unauthorizedException
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.http.HttpStatus
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.stereotype.Component
 import java.io.IOException
 import java.time.Instant
 import java.util.*
+import kotlin.jvm.Throws
 
 abstract class JwtSessionManager<T> (
 	private val ttlInMins: Long,
@@ -23,8 +25,9 @@ abstract class JwtSessionManager<T> (
 
 	companion object {
 		private const val CONVERT_TO_SECONDS = 60
-		private val mapper = ObjectMapper()
+		private val mapper = ObjectMapper().registerKotlinModule()
 	}
+
 	fun generateAuthToken(data: T): String {
 		val jsonData = mapper.writeValueAsString(data)
 		return JWT.create()
@@ -32,16 +35,13 @@ abstract class JwtSessionManager<T> (
 			.withExpiresAt(Date.from(Instant.now().plusSeconds(ttlInMins * CONVERT_TO_SECONDS)))
 			.sign(Algorithm.HMAC512(secret.toByteArray()))
 	}
+	@Throws(ServerException::class)
 
 	fun verifyToken(token: String): T {
 		val decodedJwt = try {
 			JWT.require(Algorithm.HMAC512(secret.toByteArray())).build().verify(token)
 		} catch (e: JWTVerificationException) {
-			throw ServerException(
-				httpStatusCode = HttpStatus.UNAUTHORIZED,
-				clientMessage = Message.UNAUTHORIZED,
-				cause = e
-			)
+			throw unauthorizedException(e)
 		}
 		val subject = decodedJwt.subject
 		return try {
@@ -80,7 +80,7 @@ class UserRefreshJwtSessionManager(
 	UserToken::class.java
 )
 
-data class UserToken(
+data class UserToken (
 	val id: String
 )
 data class SessionInfo(
@@ -94,6 +94,9 @@ class JwtService(
 ) {
 	fun getSessionInfo(userInfo: UserInfo): SessionInfo {
 		val userToken = UserToken(userInfo.id)
+		return getSessionInfo(userToken)
+	}
+	fun getSessionInfo(userToken: UserToken): SessionInfo {
 		val token = jwtSessionManagerFactory.userJwtSessionManager.generateAuthToken(userToken)
 		val refreshToken = jwtSessionManagerFactory.userRefreshJwtSessionManager.generateAuthToken(userToken)
 		return SessionInfo(token, refreshToken)

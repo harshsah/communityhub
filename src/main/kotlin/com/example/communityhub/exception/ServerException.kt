@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 class ServerException(
 	val httpStatusCode: HttpStatusCode,
 	val clientMessage: String? = null,
-	override val message: String? = null,
+	override val message: String? = clientMessage,
 	override val cause: Throwable? = null,
 ):Exception(message, cause) {
 	fun <T> createResponse(errorResponse: T?): ResponseEntity<T> {
@@ -31,6 +31,14 @@ fun badRequestException(
 	clientMessage = clientMessage,
 	message = message,
 	cause = cause,
+)
+
+fun unauthorizedException(
+	cause: Throwable? = null
+) = ServerException(
+	httpStatusCode = HttpStatus.UNAUTHORIZED,
+	clientMessage = Message.UNAUTHORIZED,
+	cause = cause
 )
 
 fun internalServerErrorException(
