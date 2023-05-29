@@ -15,9 +15,9 @@ data class UserInfo(
 	@Field(UPDATED) val updated: Long,
 ) {
 	companion object {
-		private const val ID = "_id"
+		const val ID = "_id"
 		private const val PASSWORD = "password"
-		private const val USER_INFO_DATA = "userInfoData"
+		const val USER_INFO_DATA = "userInfoData"
 		private const val USER_INFO_CONTACT = "userInfoContact"
 		private const val CREATED = "created"
 		private const val UPDATED = "updated"
@@ -26,13 +26,11 @@ data class UserInfo(
 
 data class UserInfoData(
 	@Field(NAME) val name: String? = null,
-	@Field(URL) val url: String? = null,
 	@Field(ICON_IMAGE) val iconImage: String? = null,
 ) {
 	companion object {
-		private const val NAME = "name"
-		private const val URL = "url"
-		private const val ICON_IMAGE = "iconImage"
+		const val NAME = "name"
+		const val ICON_IMAGE = "iconImage"
 	}
 }
 

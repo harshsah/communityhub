@@ -2,6 +2,9 @@ package com.example.communityhub.handler
 
 import com.example.communityhub.exception.ServerException
 import com.example.communityhub.exception.createServerException
+import com.example.communityhub.logging.MaskField
+import com.example.communityhub.logging.MaskFieldFactory.responseEntityMaskFieldWithBody
+import com.example.communityhub.logging.MaskingUtils.maskAsJson
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,6 +19,7 @@ fun interface Handler<T, V> {
 abstract class AbsHandler<T,V>(
 	internal val apiName: String,
 	private val errorResponseSupplier: Supplier<V>?,
+	internal val responseMaskFields: List<MaskField> = listOf(),
 	internal val log: Logger = LoggerFactory.getLogger(apiName),
 	internal val logLevel: Level = Level.INFO,
 ):Handler<T,V> {
@@ -61,8 +65,8 @@ data class LogDTO<T,V>(
 			.atLevel(handler.logLevel)
 			.log("""
 				API Interceptor, ${handler.apiName} api
-					request: $request,
-					response: $responseEntity
+					request: ${maskAsJson(request)},
+					response: ${maskAsJson(responseEntity, responseEntityMaskFieldWithBody(responseEntity?.body, handler.responseMaskFields))}
 					exceptionProduced: ${exception != null}
 					exception: 
 			""".trimIndent(), exception)

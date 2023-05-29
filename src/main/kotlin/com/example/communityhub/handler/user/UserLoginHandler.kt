@@ -1,10 +1,12 @@
-package com.example.communityhub.handler.usermanagement
+package com.example.communityhub.handler.user
 
 import com.example.communityhub.constant.Message
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.UserInfoDao
 import com.example.communityhub.exception.badRequestException
 import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.logging.LoggingGsonExclude
+import com.example.communityhub.logging.LoggingMask
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
 import org.springframework.http.HttpStatus
@@ -37,7 +39,6 @@ class UserLoginHandler(
 
 		val sessionInfo = jwtService.getSessionInfo(userInfo)
 
-
 		return ResponseEntity.ok(UserLoginResponse(
 			message = Message.OK,
 			sessionInfo = sessionInfo,
@@ -48,10 +49,12 @@ class UserLoginHandler(
 
 data class UserLoginRequest(
 	val id: String?,
+	@LoggingMask
 	val password: String?,
 )
 
 data class UserLoginResponse(
+	@LoggingGsonExclude
 	override var message: String? = null,
 	val sessionInfo: SessionInfo? = null,
 ): BaseResponse(message)

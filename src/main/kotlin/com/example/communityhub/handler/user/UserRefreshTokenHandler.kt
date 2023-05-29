@@ -1,9 +1,10 @@
-package com.example.communityhub.handler.usermanagement
+package com.example.communityhub.handler.user
 
 import com.example.communityhub.constant.Message
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
 import com.example.communityhub.utils.HeaderUtils
@@ -33,10 +34,12 @@ class UserRefreshTokenHandler(
 
 data class UserRefreshTokenRequest(
 	@JsonIgnore
+	@LoggingGsonExclude
 	override val httpHeaders: HttpHeaders
 ): BaseRequest(httpHeaders)
 
 data class UserRefreshTokenResponse(
+	@LoggingGsonExclude
 	override var message: String? = null,
 	val sessionInfo: SessionInfo? = null,
 ): BaseResponse(message)

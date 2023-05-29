@@ -3,6 +3,7 @@ package com.example.communityhub.dao
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Update
 
 
 interface Query<T, V> {
@@ -25,6 +26,7 @@ interface Query<T, V> {
 	fun findOne(): V?
 	fun findAll(): List<V>
 	fun count(): Long
+	fun updateOne(updateMap: Map<String, Any>): Boolean
 
 }
 
@@ -115,6 +117,22 @@ internal class QueryImpl<T, V>(
 	override fun findAll(): List<V> = mongoTemplate.find(generateQuery(), clazz)
 	override fun count(): Long = mongoTemplate.count(generateQuery(), clazz)
 	override fun copy(): Query<T, V> = this.copy()
+
+	override fun updateOne(updateMap: Map<String, Any>): Boolean {
+		if (updateMap.isEmpty()) {
+			return false
+		}
+		val query = generateQuery()
+		val update = generateUpdateMap(updateMap)
+		val updateResult = mongoTemplate.updateFirst(query, update, clazz)
+		return updateResult.modifiedCount > 0
+	}
+
+	private fun generateUpdateMap(updateMap: Map<String, Any>): Update {
+		val update = Update()
+		updateMap.forEach {(k,v) -> update[k] = v}
+		return update
+	}
 
 	private fun generateQuery(): org.springframework.data.mongodb.core.query.Query {
 		val query = org.springframework.data.mongodb.core.query.Query()

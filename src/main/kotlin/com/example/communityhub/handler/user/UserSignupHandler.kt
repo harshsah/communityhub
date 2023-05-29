@@ -1,4 +1,4 @@
-package com.example.communityhub.handler.usermanagement
+package com.example.communityhub.handler.user
 
 import com.example.communityhub.constant.Message
 import com.example.communityhub.controller.response.BaseResponse
@@ -8,6 +8,8 @@ import com.example.communityhub.dao.model.UserInfoContact
 import com.example.communityhub.dao.model.UserInfoData
 import com.example.communityhub.exception.badRequestException
 import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.logging.LoggingGsonExclude
+import com.example.communityhub.logging.LoggingMask
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
 import org.springframework.http.ResponseEntity
@@ -41,7 +43,7 @@ class UserSignupHandler (
 
 		val userInfo = repository.insert(UserInfo(
 			id = id,
-			userInfoData = UserInfoData(url = "/user/$id"),
+			userInfoData = UserInfoData(),
 			userInfoContact = UserInfoContact(),
 			password = passwordEncoder.encode(request.password),
 			created = currentTimeMillis,
@@ -60,9 +62,11 @@ class UserSignupHandler (
 
 data class UserSignupRequest(
 	val id: String? = null,
+	@LoggingMask
 	val password: String? = null,
 )
 data class UserSignupResponse(
+	@LoggingGsonExclude
 	override var message: String?=null,
 	val sessionInfo: SessionInfo? = null
 ): BaseResponse(message)
