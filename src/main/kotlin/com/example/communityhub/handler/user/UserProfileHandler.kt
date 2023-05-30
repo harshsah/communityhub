@@ -10,7 +10,7 @@ import com.example.communityhub.exception.ServerException
 import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.logging.LoggingMaskInterior
-import com.example.communityhub.utils.HeaderUtils
+import com.example.communityhub.service.JwtService
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -19,20 +19,21 @@ import org.springframework.stereotype.Component
 @Component
 class UserProfileHandler(
 	val userInfoDao: UserInfoDao,
-	val headerUtils: HeaderUtils,
+	val jwtService: JwtService,
 ) : AbsHandler<UserProfileRequest, UserProfileResponse>(
 	apiName = "user profile get",
 	errorResponseSupplier = { UserProfileResponse() }
 ) {
 
 	override suspend fun perform(request: UserProfileRequest): ResponseEntity<UserProfileResponse> {
-		val userInfoOptional = userInfoDao.repository().findById(request.userId)
+		val userId = request.userId.lowercase()
+		val userInfoOptional = userInfoDao.repository().findById(userId)
 		if (userInfoOptional.isEmpty) {
 			return ResponseEntity.noContent().build()
 		}
 		val userInfo = userInfoOptional.get()
 		val userToken = try {
-			headerUtils.verifyToken(request.httpHeaders)
+			jwtService.verifyToken(request.httpHeaders)
 		} catch (e: ServerException) {
 			null // non logged-in user/ expired user
 		}

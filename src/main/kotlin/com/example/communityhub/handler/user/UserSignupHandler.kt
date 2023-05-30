@@ -12,6 +12,7 @@ import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.logging.LoggingMask
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
+import com.example.communityhub.utils.StringUtils.isAlphaNumeric
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -27,9 +28,9 @@ class UserSignupHandler (
 ) {
 	override suspend  fun perform(request: UserSignupRequest): ResponseEntity<UserSignupResponse> {
 
-		val id = request.id
+		val id = request.id?.lowercase()
 
-		if (id.isNullOrEmpty()) {
+		if (id.isNullOrEmpty() || !id.isAlphaNumeric()) {
 			throw badRequestException(Message.INVALID_REQUEST)
 		}
 		if (request.password.isNullOrEmpty()) {

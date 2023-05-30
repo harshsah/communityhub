@@ -26,7 +26,7 @@ class UserLoginHandler(
 
 	override suspend fun perform(request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
 
-		val id = request.id ?: throw badRequestException(Message.INVALID_REQUEST)
+		val id = request.id?.lowercase() ?: throw badRequestException(Message.INVALID_REQUEST)
 		val password = request.password ?: throw badRequestException(Message.INVALID_REQUEST)
 
 		val userInfo = userInfoDao.repository().findById(id)

@@ -7,7 +7,6 @@ import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
-import com.example.communityhub.utils.HeaderUtils
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserRefreshTokenHandler(
-	private val headerUtils: HeaderUtils,
 	private val jwtService: JwtService,
 ): AbsHandler<UserRefreshTokenRequest, UserRefreshTokenResponse>(
 	apiName = "user login",
@@ -23,7 +21,7 @@ class UserRefreshTokenHandler(
 ) {
 
 	override suspend fun perform(request: UserRefreshTokenRequest): ResponseEntity<UserRefreshTokenResponse> {
-		val userToken = headerUtils.verifyToken(request.httpHeaders)
+		val userToken = jwtService.verifyToken(request.httpHeaders)
 		val sessionInfo = jwtService.getSessionInfo(userToken)
 		return ResponseEntity.ok(UserRefreshTokenResponse(
 				message = Message.OK,

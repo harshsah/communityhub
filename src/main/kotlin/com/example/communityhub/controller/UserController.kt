@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/user")
 class UserController (
 	private val handlers: Handlers,
-	private val headerUtils: HeaderUtils,
 ) {
 
 	@PostMapping("/auth/login")
@@ -29,25 +28,25 @@ class UserController (
 	@GetMapping("/auth/refresh")
 	fun refreshToken(servletRequest: HttpServletRequest) =
 		handlers.userHandlers.userRefreshTokenHandler
-			.handle(UserRefreshTokenRequest(headerUtils.getHeaders(servletRequest)))
+			.handle(UserRefreshTokenRequest(HeaderUtils.getHeaders(servletRequest)))
 
-	@GetMapping("/profile/{userId}")
+	@GetMapping("/{userId}")
 	fun userProfileGet(
 		servletRequest: HttpServletRequest,
 		@PathVariable("userId") userId: String,
 	) = handlers.userHandlers.userProfileHandler
 		.handle(UserProfileRequest(
-			httpHeaders = headerUtils.getHeaders(servletRequest),
+			httpHeaders = HeaderUtils.getHeaders(servletRequest),
 			userId = userId
 		))
 
-	@PostMapping("/profile/{userId}/update")
+	@PostMapping("/{userId}/update")
 	fun userProfileUpdate(
 		servletRequest: HttpServletRequest,
 		@RequestBody request: UserProfileUpdateRequest,
 	) = handlers.userHandlers.userProfileUpdateHandler
 		.handle(UserProfileUpdateRequest(
-			httpHeaders = headerUtils.getHeaders(servletRequest),
+			httpHeaders = HeaderUtils.getHeaders(servletRequest),
 			userInfoData = request.userInfoData
 		))
 

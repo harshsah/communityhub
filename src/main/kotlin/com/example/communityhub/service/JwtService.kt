@@ -11,6 +11,7 @@ import com.example.communityhub.exception.internalServerErrorException
 import com.example.communityhub.exception.unauthorizedException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import java.io.IOException
 import java.time.Instant
@@ -100,5 +101,15 @@ class JwtService(
 		val token = jwtSessionManagerFactory.userJwtSessionManager.generateAuthToken(userToken)
 		val refreshToken = jwtSessionManagerFactory.userRefreshJwtSessionManager.generateAuthToken(userToken)
 		return SessionInfo(token, refreshToken)
+	}
+
+	@Throws(ServerException::class)
+	fun verifyToken(httpHeaders: HttpHeaders): UserToken {
+		val authorizationHeader = httpHeaders.getFirst(HttpHeaders.AUTHORIZATION)
+		if (authorizationHeader.isNullOrEmpty() || !authorizationHeader.startsWith("Bearer")) {
+			throw unauthorizedException()
+		}
+		val token = authorizationHeader.substring(7)
+		return jwtSessionManagerFactory.userJwtSessionManager.verifyToken(token)
 	}
 }

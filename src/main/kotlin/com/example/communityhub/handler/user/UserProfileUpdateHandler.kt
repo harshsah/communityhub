@@ -12,7 +12,7 @@ import com.example.communityhub.exception.internalServerErrorException
 import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.logging.LoggingMaskInterior
-import com.example.communityhub.utils.HeaderUtils
+import com.example.communityhub.service.JwtService
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -20,14 +20,14 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserProfileUpdateHandler(
-	val headerUtils: HeaderUtils,
 	val userInfoDao: UserInfoDao,
+	val jwtService: JwtService,
 ) : AbsHandler<UserProfileUpdateRequest, UserProfileUpdateResponse>(
 	apiName = "user profile update",
 	errorResponseSupplier = { UserProfileUpdateResponse() },
 ) {
 	override suspend fun perform(request: UserProfileUpdateRequest): ResponseEntity<UserProfileUpdateResponse> {
-		val userToken = headerUtils.verifyToken(request.httpHeaders)
+		val userToken = jwtService.verifyToken(request.httpHeaders)
 		val id = userToken.id
 
 		val updateMap = mutableMapOf<String, Any>()
