@@ -16,13 +16,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
 
 @Component
 class PostCreateHandler(
 	private val jwtService: JwtService,
 	private val postDao: PostDao,
-	private val communityDao: CommunityDao
+	private val communityDao: CommunityDao,
 ) : AbsHandler<PostCreateRequest, PostCreateResponse>(
 	apiName = "post create",
 	errorResponseSupplier = { PostCreateResponse() }
@@ -32,7 +32,7 @@ class PostCreateHandler(
 		val userToken = jwtService.verifyToken(request.httpHeaders)
 		val userId = userToken.id;
 		val communityId = request.data.communityId
-		if (communityId.isEmpty() || !communityDao.repository().existsById(communityId)) {
+		if (communityId.isEmpty() || !communityDao.existsById(communityId)) {
 			throw badRequestException(Message.COMMUNITY_ID_NOT_PRESENT)
 		}
 		val post = Post(
@@ -44,7 +44,7 @@ class PostCreateHandler(
 			created = currentTimeMillis,
 			updated = currentTimeMillis,
 		)
-		postDao.repository().insert(post)
+		postDao.insert(post)
 		return ResponseEntity.ok(PostCreateResponse(
 			message = Message.CREATED,
 			post = getPostModel(post),

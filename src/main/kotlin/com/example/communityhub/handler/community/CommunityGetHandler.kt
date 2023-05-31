@@ -19,13 +19,11 @@ class CommunityGetHandler(
 ) {
 	override suspend fun perform(request: CommunityGetRequest): ResponseEntity<CommunityGetResponse> {
 		val communityId = request.communityId.lowercase()
-		val communityOptional = communityDao.repository().findById(communityId)
-		if (communityOptional.isEmpty) {
-			return ResponseEntity.noContent().build()
-		}
+		val community = communityDao.findById(communityId)
+			?: return ResponseEntity.noContent().build()
 		return ResponseEntity.ok(CommunityGetResponse(
 			message = Message.OK,
-			community = getCommunityModel(communityOptional.get())
+			community = getCommunityModel(community)
 		))
 	}
 }

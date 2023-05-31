@@ -6,6 +6,7 @@ import com.example.communityhub.logging.MaskField
 import com.example.communityhub.logging.MaskFieldFactory.responseEntityMaskFieldWithBody
 import com.example.communityhub.logging.MaskingUtils.maskAsJson
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
@@ -20,6 +21,7 @@ abstract class AbsHandler<T,V>(
 	internal val apiName: String,
 	private val errorResponseSupplier: Supplier<V>?,
 	internal val responseMaskFields: List<MaskField> = listOf(),
+	internal val timeout: Long = 1000L,
 	internal val log: Logger = LoggerFactory.getLogger(apiName),
 	internal val logLevel: Level = Level.INFO,
 ):Handler<T,V> {
@@ -29,7 +31,7 @@ abstract class AbsHandler<T,V>(
 		var logDTO: LogDTO<T,V>
 		try {
 			validate(request)
-			responseEntity = runBlocking { perform(request) }
+			responseEntity = runBlocking { withTimeout(timeout) { perform(request) } }
 			logDTO = LogDTO(request, responseEntity, null)
 		} catch (e: Exception) {
 			val serverException = createServerException(e)

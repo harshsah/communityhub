@@ -29,8 +29,7 @@ class UserLoginHandler(
 		val id = request.id?.lowercase() ?: throw badRequestException(Message.INVALID_REQUEST)
 		val password = request.password ?: throw badRequestException(Message.INVALID_REQUEST)
 
-		val userInfo = userInfoDao.repository().findById(id)
-			.orElseThrow { badRequestException(Message.USER_NOT_FOUND) }
+		val userInfo = userInfoDao.findById(id) ?: throw badRequestException(Message.USER_NOT_FOUND)
 
 		if (!passwordEncoder.matches(password, userInfo.password)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

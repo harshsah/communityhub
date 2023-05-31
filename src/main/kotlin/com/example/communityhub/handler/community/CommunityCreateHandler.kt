@@ -36,8 +36,7 @@ class CommunityCreateHandler(
 		}
 
 		val communityId: String = request.data.id.lowercase()
-		communityDao.repository().findById(communityId)
-			.ifPresent { throw badRequestException(Message.COMMUNITY_ID_ALREADY_PRESENT) }
+		communityDao.findById(communityId) ?: throw badRequestException(Message.COMMUNITY_ID_ALREADY_PRESENT)
 
 		val community = Community(
 			id = communityId,
@@ -50,7 +49,7 @@ class CommunityCreateHandler(
 			created = currentTimeMillis,
 			updated = currentTimeMillis,
 		)
-		communityDao.repository().insert(community)
+		communityDao.insert(community)
 
 		return ResponseEntity.ok(CommunityCreateResponse(
 			message = Message.CREATED,

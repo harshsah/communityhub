@@ -11,7 +11,10 @@ object Message {
 	const val USER_NOT_FOUND = "User Not Found"
 	const val INVALID_CREDENTIALS = "Invalid Credentials"
 
-
 	const val COMMUNITY_ID_NOT_PRESENT = "CommunityId Not Present"
 	const val COMMUNITY_ID_ALREADY_PRESENT = "CommunityId Not Already Present"
+
+	const val POST_NOT_FOUND = "post not found"
+
+	const val PARENT_COMMENT_NOT_FOUND = "parent comment not found"
 }

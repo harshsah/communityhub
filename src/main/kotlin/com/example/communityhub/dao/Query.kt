@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Update
 
 
 interface Query<T, V> {
+	fun copy(): Query<T, V>
 	fun `is`(field: String?, value: Any?): Query<T, V>
 	fun `in`(field: String?, value: List<Any>?): Query<T, V>
 	fun caseSensitive(field: String?, value: String?): Query<T, V>
@@ -17,16 +18,14 @@ interface Query<T, V> {
 	fun skip(skip: Long): Query<T, V>
 	fun limit(limit: Int): Query<T, V>
 
-	fun copy(): Query<T, V>
-
 	/**
 	 * @param value: 1 or -1
 	 */
 	fun sort(field: String?, value: Byte): Query<T, V>
-	fun findOne(): V?
-	fun findAll(): List<V>
-	fun count(): Long
-	fun updateOne(updateMap: Map<String, Any>): Boolean
+	suspend fun findOne(): V?
+	suspend fun findAll(): List<V>
+	suspend fun count(): Long
+	suspend fun updateOne(updateMap: Map<String, Any>): Boolean
 
 }
 
@@ -49,6 +48,8 @@ internal class QueryImpl<T, V>(
 	private val sortMap: MutableMap<String, Sort.Direction> = HashMap()
 
 ) : Query<T, V> {
+
+	override fun copy(): Query<T, V> = this.copy()
 	override fun `is`(field: String?, value: Any?): Query<T, V> {
 		if (!field.isNullOrEmpty() && value != null) {
 			isMap[field] = value
@@ -113,12 +114,11 @@ internal class QueryImpl<T, V>(
 		return this
 	}
 
-	override fun findOne(): V? = mongoTemplate.findOne(generateQuery(), clazz)
-	override fun findAll(): List<V> = mongoTemplate.find(generateQuery(), clazz)
-	override fun count(): Long = mongoTemplate.count(generateQuery(), clazz)
-	override fun copy(): Query<T, V> = this.copy()
+	override suspend fun findOne(): V? = mongoTemplate.findOne(generateQuery(), clazz)
+	override suspend fun findAll(): List<V> = mongoTemplate.find(generateQuery(), clazz)
+	override suspend fun count(): Long = mongoTemplate.count(generateQuery(), clazz)
 
-	override fun updateOne(updateMap: Map<String, Any>): Boolean {
+	override suspend fun updateOne(updateMap: Map<String, Any>): Boolean {
 		if (updateMap.isEmpty()) {
 			return false
 		}

@@ -27,15 +27,12 @@ class UserProfileHandler(
 
 	override suspend fun perform(request: UserProfileRequest): ResponseEntity<UserProfileResponse> {
 		val userId = request.userId.lowercase()
-		val userInfoOptional = userInfoDao.repository().findById(userId)
-		if (userInfoOptional.isEmpty) {
-			return ResponseEntity.noContent().build()
-		}
-		val userInfo = userInfoOptional.get()
+		val userInfo = userInfoDao.findById(userId)
+			?: return ResponseEntity.noContent().build()
 		val userToken = try {
 			jwtService.verifyToken(request.httpHeaders)
 		} catch (e: ServerException) {
-			null // non logged-in user/ expired user
+			null // non-logged-in user/ expired user
 		}
 		val response = UserProfileResponse(
 			message = Message.OK,

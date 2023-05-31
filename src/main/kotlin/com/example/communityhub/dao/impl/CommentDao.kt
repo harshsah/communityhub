@@ -1,17 +1,17 @@
 package com.example.communityhub.dao.impl
 
 import com.example.communityhub.dao.AbsDao
-import com.example.communityhub.dao.model.UserInfo
-import com.example.communityhub.dao.repository.UserInfoRepository
+import com.example.communityhub.dao.model.Comment
+import com.example.communityhub.dao.repository.CommentRepository
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class UserInfoDao(
-	repository: UserInfoRepository,
-	mongoTemplate: MongoTemplate,
-) : AbsDao<String, UserInfo>(
+class CommentDao(
+	repository: CommentRepository,
+	mongoTemplate: MongoTemplate
+) : AbsDao<String, Comment>(
 	repository = repository,
 	mongoTemplate = mongoTemplate,
-	clazz = UserInfo::class.java
+	clazz = Comment::class.java
 )

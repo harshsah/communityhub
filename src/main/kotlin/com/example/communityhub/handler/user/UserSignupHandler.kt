@@ -36,13 +36,13 @@ class UserSignupHandler (
 		if (request.password.isNullOrEmpty()) {
 			throw badRequestException(Message.INVALID_REQUEST)
 		}
-
-		val repository = userInfoDao.repository()
-		repository.findById(id).ifPresent {throw badRequestException(Message.USER_ALREADY_PRESENT) }
+		if (userInfoDao.existsById(id)) {
+			throw badRequestException(Message.USER_ALREADY_PRESENT)
+		}
 
 		val currentTimeMillis = System.currentTimeMillis()
 
-		val userInfo = repository.insert(UserInfo(
+		val userInfo = userInfoDao.insert(UserInfo(
 			id = id,
 			userInfoData = UserInfoData(),
 			userInfoContact = UserInfoContact(),

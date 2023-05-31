@@ -46,8 +46,8 @@ class UserProfileUpdateHandler(
 		userInfoDao.query()
 			.`is`(UserInfo.ID, id)
 			.updateOne(updateMap)
-		val userInfo = userInfoDao.repository().findById(id)
-			.orElseThrow { internalServerErrorException(message = "Data Not Found $id") }
+		val userInfo = userInfoDao.findById(id)
+			?: throw internalServerErrorException(message = "Data Not Found $id")
 
 		return ResponseEntity.ok(UserProfileUpdateResponse(
 			message = Message.OK,

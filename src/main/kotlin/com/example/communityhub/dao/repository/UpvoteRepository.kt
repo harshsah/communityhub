@@ -1,8 +1,8 @@
 package com.example.communityhub.dao.repository
 
-import com.example.communityhub.dao.model.Post
+import com.example.communityhub.dao.model.Upvote
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PostRepository : MongoRepository<Post, String>
+interface UpvoteRepository : MongoRepository<Upvote, String>
