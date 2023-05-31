@@ -67,5 +67,6 @@ data class CommentCreateRequestData(
 )
 
 data class CommentCreateResponse(
+	@LoggingGsonExclude
 	override var message: String? = null
 ) : BaseResponse(message)

@@ -14,11 +14,11 @@ data class Upvote(
 ) {
 
 	companion object {
-		private const val ID = "_id"
-		private const val ENTITY_TYPE = "entityType"
-		private const val ENTITY_ID = "entityId"
-		private const val USER_ID = "userId"
-		private const val TYPE = "type"
+		const val ID = "_id"
+		const val ENTITY_TYPE = "entityType"
+		const val ENTITY_ID = "entityId"
+		const val USER_ID = "userId"
+		const val TYPE = "type"
 		private const val CREATED = "created"
 		private const val UPDATED = "updated"
 	}
@@ -28,6 +28,12 @@ enum class UpvoteType {
 	UPVOTE,
 	DOWNVOTE,
 	NONE,
+	;
+
+	companion object {
+		private val nameMap: Map<String, UpvoteType> = UpvoteType.values().associateBy { it.name }
+		fun getFromName(name: String?) = name?.let { nameMap[it] }
+	}
 }
 
 enum class UpvoteEntityType {

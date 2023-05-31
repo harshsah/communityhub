@@ -74,6 +74,7 @@ data class CommunityCreateRequestData(
 )
 
 data class CommunityCreateResponse(
+	@LoggingGsonExclude
 	override var message: String? = null,
 	val community: CommunityModel? = null,
 ): BaseResponse(message)

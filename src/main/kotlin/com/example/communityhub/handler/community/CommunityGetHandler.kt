@@ -6,6 +6,7 @@ import com.example.communityhub.controller.model.getCommunityModel
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommunityDao
 import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.logging.LoggingGsonExclude
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import java.util.function.Supplier
@@ -33,6 +34,7 @@ data class CommunityGetRequest(
 )
 
 data class CommunityGetResponse(
+	@LoggingGsonExclude
 	override var message: String? = null,
 	val community: CommunityModel? = null,
 ) : BaseResponse(message)

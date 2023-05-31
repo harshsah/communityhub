@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Update
 interface Query<T, V> {
 	fun copy(): Query<T, V>
 	fun `is`(field: String?, value: Any?): Query<T, V>
+	fun isNot(field: String?, value: Any?): Query<T, V>
 	fun `in`(field: String?, value: List<Any>?): Query<T, V>
 	fun caseSensitive(field: String?, value: String?): Query<T, V>
 	fun caseInSensitive(field: String?, value: String?): Query<T, V>
@@ -25,7 +26,7 @@ interface Query<T, V> {
 	suspend fun findOne(): V?
 	suspend fun findAll(): List<V>
 	suspend fun count(): Long
-	suspend fun updateOne(updateMap: Map<String, Any>): Boolean
+	suspend fun updateOne(updateMap: Map<String, Any?>): Boolean
 
 }
 
@@ -35,8 +36,9 @@ internal class QueryImpl<T, V>(
 	private val clazz: Class<V>,
 	private val defaultLimit: Int = 100,
 
-	private val isMap: MutableMap<String, Any> = HashMap(),
-	private val inMap: MutableMap<String, List<Any>> = HashMap(),
+	private val isMap: MutableMap<String, Any?> = HashMap(),
+	private val isNotMap: MutableMap<String, Any?> = HashMap(),
+	private val inMap: MutableMap<String, List<Any?>> = HashMap(),
 	private val caseSensitiveMap: MutableMap<String, String> = HashMap(),
 	private val caseInsensitiveMap: MutableMap<String, String> = HashMap(),
 	private val lteMap: MutableMap<String, Long> = HashMap(),
@@ -51,8 +53,15 @@ internal class QueryImpl<T, V>(
 
 	override fun copy(): Query<T, V> = this.copy()
 	override fun `is`(field: String?, value: Any?): Query<T, V> {
-		if (!field.isNullOrEmpty() && value != null) {
+		if (!field.isNullOrEmpty()) {
 			isMap[field] = value
+		}
+		return this
+	}
+
+	override fun isNot(field: String?, value: Any?): Query<T, V> {
+		if (!field.isNullOrEmpty()) {
+			isNotMap[field] = value
 		}
 		return this
 	}
@@ -118,7 +127,7 @@ internal class QueryImpl<T, V>(
 	override suspend fun findAll(): List<V> = mongoTemplate.find(generateQuery(), clazz)
 	override suspend fun count(): Long = mongoTemplate.count(generateQuery(), clazz)
 
-	override suspend fun updateOne(updateMap: Map<String, Any>): Boolean {
+	override suspend fun updateOne(updateMap: Map<String, Any?>): Boolean {
 		if (updateMap.isEmpty()) {
 			return false
 		}
@@ -128,7 +137,7 @@ internal class QueryImpl<T, V>(
 		return updateResult.modifiedCount > 0
 	}
 
-	private fun generateUpdateMap(updateMap: Map<String, Any>): Update {
+	private fun generateUpdateMap(updateMap: Map<String, Any?>): Update {
 		val update = Update()
 		updateMap.forEach {(k,v) -> update[k] = v}
 		return update
@@ -138,6 +147,7 @@ internal class QueryImpl<T, V>(
 		val query = org.springframework.data.mongodb.core.query.Query()
 
 		isMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).`is`(v)) }
+		isNotMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).ne(v)) }
 		inMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).`in`(v)) }
 		caseSensitiveMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).regex(v)) }
 		caseSensitiveMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).regex(v, "i")) }
