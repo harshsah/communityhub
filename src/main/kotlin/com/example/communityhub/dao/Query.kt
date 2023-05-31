@@ -125,7 +125,10 @@ internal class QueryImpl<T, V>(
 
 	override suspend fun findOne(): V? = mongoTemplate.findOne(generateQuery(), clazz)
 	override suspend fun findAll(): List<V> = mongoTemplate.find(generateQuery(), clazz)
-	override suspend fun count(): Long = mongoTemplate.count(generateQuery(), clazz)
+	override suspend fun count(): Long = mongoTemplate.count(generateQuery(
+		useSort = false,
+		useSkipLimit = false
+	), clazz)
 
 	override suspend fun updateOne(updateMap: Map<String, Any?>): Boolean {
 		if (updateMap.isEmpty()) {
@@ -143,7 +146,10 @@ internal class QueryImpl<T, V>(
 		return update
 	}
 
-	private fun generateQuery(): org.springframework.data.mongodb.core.query.Query {
+	private fun generateQuery(
+		useSort: Boolean = true,
+		useSkipLimit: Boolean = true,
+	): org.springframework.data.mongodb.core.query.Query {
 		val query = org.springframework.data.mongodb.core.query.Query()
 
 		isMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).`is`(v)) }
@@ -154,9 +160,12 @@ internal class QueryImpl<T, V>(
 		lteMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).lte(v)) }
 		gteMap.forEach { (k, v) -> query.addCriteria(Criteria.where(k).gte(v)) }
 
-		sortMap.forEach { (k, v) -> query.with(Sort.by(v, k)) }
-
-		query.skip(skip).limit(limit)
+		if (useSort) {
+			sortMap.forEach { (k, v) -> query.with(Sort.by(v, k)) }
+		}
+		if (useSkipLimit) {
+			query.skip(skip).limit(limit)
+		}
 
 		return query
 	}
