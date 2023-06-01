@@ -49,6 +49,7 @@ abstract class AbsHandler<T,V>(
 
 	@Throws(ServerException::class)
 	internal fun validate(request: T) {
+
 		// optional validate function
 	}
 
