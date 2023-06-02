@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.post
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.PostModel
 import com.example.communityhub.controller.model.getPostModel
 import com.example.communityhub.controller.request.BaseRequest
@@ -33,7 +33,7 @@ class PostCreateHandler(
 		val userId = userToken.id;
 		val communityId = request.data.communityId
 		if (communityId.isEmpty() || !communityDao.existsById(communityId)) {
-			throw badRequestException(Message.COMMUNITY_ID_NOT_PRESENT)
+			throw badRequestException(MessageConstant.COMMUNITY_ID_NOT_PRESENT)
 		}
 		val post = Post(
 			id = UUID.randomUUID().toString(),
@@ -46,7 +46,7 @@ class PostCreateHandler(
 		)
 		postDao.insert(post)
 		return ResponseEntity.ok(PostCreateResponse(
-			message = Message.CREATED,
+			message = MessageConstant.CREATED,
 			post = getPostModel(post),
 		))
 	}

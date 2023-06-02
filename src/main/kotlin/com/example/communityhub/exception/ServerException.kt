@@ -1,6 +1,6 @@
 package com.example.communityhub.exception
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.response.BaseResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -23,7 +23,7 @@ class ServerException(
 }
 
 fun badRequestException(
-	clientMessage: String? = Message.SOMETHING_WENT_WRONG,
+	clientMessage: String? = MessageConstant.SOMETHING_WENT_WRONG,
 	message: String? = clientMessage,
 	cause: Throwable? = null,
 ) = ServerException(
@@ -37,12 +37,12 @@ fun unauthorizedException(
 	cause: Throwable? = null
 ) = ServerException(
 	httpStatusCode = HttpStatus.UNAUTHORIZED,
-	clientMessage = Message.UNAUTHORIZED,
+	clientMessage = MessageConstant.UNAUTHORIZED,
 	cause = cause
 )
 
 fun internalServerErrorException(
-	clientMessage: String? = Message.SOMETHING_WENT_WRONG,
+	clientMessage: String? = MessageConstant.SOMETHING_WENT_WRONG,
 	message: String? = clientMessage,
 	cause: Throwable? = null,
 ) = ServerException(

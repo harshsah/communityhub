@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.community
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.CommunityModel
 import com.example.communityhub.controller.model.getCommunityModel
 import com.example.communityhub.controller.response.BaseResponse
@@ -23,7 +23,7 @@ class CommunityGetHandler(
 		val community = communityDao.findById(communityId)
 			?: return ResponseEntity.noContent().build()
 		return ResponseEntity.ok(CommunityGetResponse(
-			message = Message.OK,
+			message = MessageConstant.OK,
 			community = getCommunityModel(community)
 		))
 	}

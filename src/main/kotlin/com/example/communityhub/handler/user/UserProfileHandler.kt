@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.user
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.UserInfoModel
 import com.example.communityhub.controller.model.getUserInfoModel
 import com.example.communityhub.controller.request.BaseRequest
@@ -35,7 +35,7 @@ class UserProfileHandler(
 			null // non-logged-in user/ expired user
 		}
 		val response = UserProfileResponse(
-			message = Message.OK,
+			message = MessageConstant.OK,
 			user = getUserInfoModel(userInfo, userToken?.id == userInfo.id)
 		)
 		return ResponseEntity.ok(response)

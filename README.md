@@ -1,53 +1,54 @@
 # CommunityHub
 Demo Project for Spring boot kotlin
 
+# Backend Tasks:
+- [x] User Registration: Implement the functionality for users to create an account with a unique userId and password.
+- [x] User Login: Implement secure user authentication and login functionality.
+- [ ] User Profiles: Create user profile pages to showcase user interests, activities, and contributions.
 
-## CommunityHub - A Platform for Community Engagement
+- [x] Create Communities: Allow users to create their own communities based on specific topics, interests, or themes.
+- [ ] Join/Leave Communities: Implement the ability for users to join or leave communities based on their preferences.
+- [ ] Community Discovery: Develop features to help users discover new communities based on interests, popularity, and recommendations.
 
-### User Registration and Authentication:
-* [x] User Registration: Users should be able to create an account on CommunityHub by providing a unique userId and password.
-* [x] User Login: Registered users should be able to log in to their accounts securely.
-* [ ] User Profiles: Each user should have a profile page that showcases their interests, activities, and contributions within the platform.
+- [ ] Create Posts: Enable users to create posts within communities, supporting various media types.
+- [ ] Upvote/Downvote System: Implement functionality for users to upvote or downvote posts and comments.
+- [ ] Content Moderation: Develop moderation tools to ensure a respectful and engaging community environment.
 
-### Community Management:
-* [x] Create Communities: Users should be able to create their own communities based on specific topics, interests, or themes.
-* [ ] Join/Leave Communities: Users should have the ability to join or leave communities based on their interests and preferences. 
-* [ ] Community Discovery: Implement features to help users discover new communities based on their interests, popularity, and recommendations.
+- [ ] Commenting System: Implement the ability for users to post comments on community posts.
+- [ ] Threaded Discussions: Enable threaded discussions by allowing users to reply to comments.
+- [ ] Notifications: Implement notifications to alert users about new comments or replies.
 
-### Post and Content Management:
-* [ ] Create Posts: Users should be able to create posts within communities, including text, images, links, and other media types.
-* [ ] Upvote/Downvote System: Enable users to express their opinions and provide feedback by upvoting or downvoting posts and comments.
-* [ ] Content Moderation: Implement moderation tools to ensure that communities maintain a respectful and engaging environment, including the ability to report and remove inappropriate content.
+- [ ] Search Functionality: Enable users to search for communities, posts, and users based on keywords.
+- [ ] Trending and Popular Content: Highlight trending and popular posts, communities, and discussions.
 
-### Commenting and Discussion:
-* [ ] Commenting System: Users should be able to engage in discussions by posting comments on community posts.
-* [ ] Threaded Discussions: Allow users to reply to comments, facilitating threaded discussions for better organization and readability.
-* [ ] Notifications: Implement notifications to alert users about new comments or replies to their posts and comments.
+- [ ] User Interactions: Implement features for users to follow other users, like posts, and bookmark content.
+- [ ] Private Messaging: Enable users to send private messages and communicate securely.
 
-### Search and Discovery:
-* [ ] Search Functionality: Enable users to search for communities, posts, and users based on keywords and relevant criteria.
-* [ ] Trending and Popular Content: Highlight trending and popular posts, communities, and discussions to enhance user discovery.
+- [ ] Community Analytics: Provide community moderators with insights and analytics on growth, engagement, and user activity.
+- [ ] User Activity Tracking: Track user activity and provide personalized recommendations.
 
-### User Interaction and Engagement:
-* [ ] User Interactions: Provide features for users to follow other users, like posts, and bookmark content for later reference.
-* [ ] Private Messaging: Enable users to send private messages and communicate with each other securely within the platform.
+# Frontend Tasks:
+- [ ] User Registration and Login UI: Design and implement user registration and login interfaces.
+- [ ] User Profile UI: Create user profile pages to display user information, interests, and contributions.
 
-### Analytics and Insights:
-* [ ] Community Analytics: Provide community moderators with insights and analytics regarding community growth, engagement, and user activity.
-* [ ] User Activity Tracking: Track user activity and provide personalized recommendations based on their interests and interactions.
+- [ ] Community Creation UI: Design interfaces for users to create new communities.
+- [ ] Community Discovery UI: Create interfaces to help users discover and explore communities.
 
-### Security and Privacy:
-* [ ] Implement robust security measures to protect user data, including encryption, secure authentication, and adherence to privacy regulations.
-* [ ] User Privacy Controls: Provide users with options to control the visibility and privacy settings of their profile and content.
+- [ ] Post Creation UI: Design interfaces for users to create posts with text, images, and media.
+- [ ] Voting and Commenting UI: Implement interfaces for users to upvote/downvote and comment on posts.
 
-### Performance and Scalability:
-* [ ] Ensure the platform can handle high traffic and scale as the user base grows.
-* [ ] Optimize performance for fast loading times and smooth user experience.
+- [ ] Search UI: Design and implement search interfaces for communities, posts, and users.
+- [ ] Trending and Popular Content UI: Display trending and popular posts and communities.
 
-### Mobile Compatibility:
-* [ ] Ensure the platform is responsive and compatible with mobile devices, providing an optimized experience for users accessing CommunityHub through smartphones and tablets.
+- [ ] User Interaction UI: Implement interfaces for users to follow other users, like posts, and bookmark content.
+- [ ] Private Messaging UI: Design interfaces for users to send private messages.
 
-### Testing, Deployment, and Support:
-* [ ] Conduct thorough testing, including functional testing, performance testing, and security testing.
-* [ ] Deploy CommunityHub to a reliable hosting environment, considering scalability and availability.
-* [ ] Provide ongoing support, maintenance, and regular updates to address issues and introduce new features.
+- [ ] Community Analytics UI: Develop interfaces to display community growth and engagement analytics.
+- [ ] User Activity Tracking UI: Design interfaces to show user activity and recommendations.
+
+- [ ] Responsive Design: Ensure the platform is responsive and compatible with mobile devices.
+
+- [ ] Testing: Perform frontend testing to ensure functionality and usability.
+- [ ] Deployment: Deploy the frontend code to a hosting environment.
+- [ ] Ongoing Support: Provide ongoing support, maintenance, and updates for the frontend components.
+

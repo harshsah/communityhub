@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.user
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.UserInfoDao
 import com.example.communityhub.dao.model.UserInfo
@@ -31,13 +31,13 @@ class UserSignupHandler (
 		val id = request.id?.lowercase()
 
 		if (id.isNullOrEmpty() || !id.isAlphaNumeric()) {
-			throw badRequestException(Message.INVALID_REQUEST)
+			throw badRequestException(MessageConstant.INVALID_REQUEST)
 		}
 		if (request.password.isNullOrEmpty()) {
-			throw badRequestException(Message.INVALID_REQUEST)
+			throw badRequestException(MessageConstant.INVALID_REQUEST)
 		}
 		if (userInfoDao.existsById(id)) {
-			throw badRequestException(Message.USER_ALREADY_PRESENT)
+			throw badRequestException(MessageConstant.USER_ALREADY_PRESENT)
 		}
 
 		val currentTimeMillis = System.currentTimeMillis()
@@ -54,7 +54,7 @@ class UserSignupHandler (
 		val sessionInfo = jwtService.getSessionInfo(userInfo)
 
 		return ResponseEntity.ok(UserSignupResponse(
-			message = Message.CREATED,
+			message = MessageConstant.CREATED,
 			sessionInfo = sessionInfo,
 		))
 	}

@@ -1,6 +1,6 @@
 package com.example.communityhub.constant
 
-object Message {
+object MessageConstant {
 	const val OK = "OK"
 	const val CREATED = "CREATED"
 	const val UNAUTHORIZED = "Unauthorized"

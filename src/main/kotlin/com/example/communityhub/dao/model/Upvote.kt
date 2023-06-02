@@ -1,8 +1,11 @@
 package com.example.communityhub.dao.model
 
+import com.example.communityhub.constant.DaoConstant
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 
+@Document(collection = DaoConstant.COLLECTION_NAME_UPVOTE)
 data class Upvote(
 	@Id @Field(ID) val id: String,
 	@Field(ENTITY_TYPE) val entityType: UpvoteEntityType,

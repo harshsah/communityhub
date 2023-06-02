@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.user
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.UserInfoDao
 import com.example.communityhub.exception.badRequestException
@@ -26,20 +26,20 @@ class UserLoginHandler(
 
 	override suspend fun perform(request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
 
-		val id = request.id?.lowercase() ?: throw badRequestException(Message.INVALID_REQUEST)
-		val password = request.password ?: throw badRequestException(Message.INVALID_REQUEST)
+		val id = request.id?.lowercase() ?: throw badRequestException(MessageConstant.INVALID_REQUEST)
+		val password = request.password ?: throw badRequestException(MessageConstant.INVALID_REQUEST)
 
-		val userInfo = userInfoDao.findById(id) ?: throw badRequestException(Message.USER_NOT_FOUND)
+		val userInfo = userInfoDao.findById(id) ?: throw badRequestException(MessageConstant.USER_NOT_FOUND)
 
 		if (!passwordEncoder.matches(password, userInfo.password)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				.body(UserLoginResponse(message = Message.UNAUTHORIZED))
+				.body(UserLoginResponse(message = MessageConstant.UNAUTHORIZED))
 		}
 
 		val sessionInfo = jwtService.getSessionInfo(userInfo)
 
 		return ResponseEntity.ok(UserLoginResponse(
-			message = Message.OK,
+			message = MessageConstant.OK,
 			sessionInfo = sessionInfo,
 		))
 	}

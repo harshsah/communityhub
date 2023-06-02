@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.community
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.CommunityModel
 import com.example.communityhub.controller.model.getCommunityModel
 import com.example.communityhub.controller.request.BaseRequest
@@ -32,11 +32,11 @@ class CommunityCreateHandler(
 		val userId = userToken.id
 
 		if (request.data.id.isNullOrEmpty() || !request.data.id.isAlphaNumeric()) {
-			throw badRequestException(Message.COMMUNITY_ID_NOT_PRESENT)
+			throw badRequestException(MessageConstant.COMMUNITY_ID_NOT_PRESENT)
 		}
 
 		val communityId: String = request.data.id.lowercase()
-		communityDao.findById(communityId) ?: throw badRequestException(Message.COMMUNITY_ID_ALREADY_PRESENT)
+		communityDao.findById(communityId) ?: throw badRequestException(MessageConstant.COMMUNITY_ID_ALREADY_PRESENT)
 
 		val community = Community(
 			id = communityId,
@@ -52,7 +52,7 @@ class CommunityCreateHandler(
 		communityDao.insert(community)
 
 		return ResponseEntity.ok(CommunityCreateResponse(
-			message = Message.CREATED,
+			message = MessageConstant.CREATED,
 			community = getCommunityModel(community),
 			))
 	}

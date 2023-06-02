@@ -21,7 +21,7 @@ abstract class AbsHandler<T,V>(
 	internal val apiName: String,
 	private val errorResponseSupplier: Supplier<V>?,
 	internal val responseMaskFields: List<MaskField> = listOf(),
-	internal val timeout: Long = 1000L,
+	private val timeout: Long = 1000L,
 	internal val log: Logger = LoggerFactory.getLogger(apiName),
 	internal val logLevel: Level = Level.INFO,
 ):Handler<T,V> {
@@ -49,7 +49,6 @@ abstract class AbsHandler<T,V>(
 
 	@Throws(ServerException::class)
 	internal fun validate(request: T) {
-
 		// optional validate function
 	}
 

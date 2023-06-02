@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.user
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.handler.AbsHandler
@@ -24,7 +24,7 @@ class UserRefreshTokenHandler(
 		val userToken = jwtService.verifyToken(request.httpHeaders)
 		val sessionInfo = jwtService.getSessionInfo(userToken)
 		return ResponseEntity.ok(UserRefreshTokenResponse(
-				message = Message.OK,
+				message = MessageConstant.OK,
 				sessionInfo = sessionInfo,
 			))
 	}

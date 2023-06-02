@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.upvote
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.UpvoteDao
@@ -33,7 +33,7 @@ class UpvoteHandler (
 
 		val upvoteType = request.data.type?.takeIf { it.isNotEmpty() }
 			?.let { UpvoteType.getFromName(it) }
-			?: throw badRequestException(Message.INVALID_REQUEST)
+			?: throw badRequestException(MessageConstant.INVALID_REQUEST)
 
 		val upvoteInDb = upvoteDao.query()
 			.`is`(Upvote.TYPE, entityType)
@@ -58,7 +58,7 @@ class UpvoteHandler (
 			)
 			upvoteDao.insert(upvote)
 		}
-		return ResponseEntity.ok(UpvoteResponse(Message.OK))
+		return ResponseEntity.ok(UpvoteResponse(MessageConstant.OK))
 	}
 
 	private fun getEntityPair(request: UpvoteRequest) : Pair<UpvoteEntityType, String> {
@@ -66,7 +66,7 @@ class UpvoteHandler (
 			?.let { return Pair(UpvoteEntityType.POST, it) }
 		request.data.commentId?.takeIf { it.isNotEmpty() }
 			?.let { return Pair(UpvoteEntityType.COMMENT, it) }
-		throw badRequestException(Message.POST_NOT_FOUND)
+		throw badRequestException(MessageConstant.POST_NOT_FOUND)
 	}
 }
 

@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.comment
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommentDao
@@ -29,12 +29,12 @@ class CommentCreateHandler(
 		val currentTimeMillis = System.currentTimeMillis()
 		val userId = jwtService.verifyToken(request.httpHeaders).id
 		val content = request.data.content?.takeIf { it.isNotEmpty() }
-			?: throw badRequestException(Message.INVALID_REQUEST)
+			?: throw badRequestException(MessageConstant.INVALID_REQUEST)
 		val postId = request.data.postId?.takeIf { it.isNotEmpty() && postDao.existsById(it)}
-			?: throw badRequestException(Message.POST_NOT_FOUND)
+			?: throw badRequestException(MessageConstant.POST_NOT_FOUND)
 		val parentId = request.data.parentId?.let {
 			if (!commentDao.existsById(it)) {
-				throw badRequestException(Message.PARENT_COMMENT_NOT_FOUND)
+				throw badRequestException(MessageConstant.PARENT_COMMENT_NOT_FOUND)
 			}
 			it
 		}
@@ -49,7 +49,7 @@ class CommentCreateHandler(
 			updated = currentTimeMillis,
 		)
 		commentDao.insert(comment)
-		return ResponseEntity.ok(CommentCreateResponse(Message.OK))
+		return ResponseEntity.ok(CommentCreateResponse(MessageConstant.OK))
 	}
 }
 

@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.example.communityhub.config.AppConfig
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.dao.model.UserInfo
 import com.example.communityhub.exception.ServerException
 import com.example.communityhub.exception.internalServerErrorException
@@ -49,7 +49,7 @@ abstract class JwtSessionManager<T> (
 			mapper.readValue(subject, type)
 		} catch (e: IOException) {
 			throw internalServerErrorException(
-				clientMessage = Message.SOMETHING_WENT_WRONG,
+				clientMessage = MessageConstant.SOMETHING_WENT_WRONG,
 				message = "Parsing Failed",
 				cause = e
 			)

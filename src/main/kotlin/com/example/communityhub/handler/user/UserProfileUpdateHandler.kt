@@ -1,6 +1,6 @@
 package com.example.communityhub.handler.user
 
-import com.example.communityhub.constant.Message
+import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.UserInfoModel
 import com.example.communityhub.controller.model.getUserInfoModel
 import com.example.communityhub.controller.request.BaseRequest
@@ -50,7 +50,7 @@ class UserProfileUpdateHandler(
 			?: throw internalServerErrorException(message = "Data Not Found $id")
 
 		return ResponseEntity.ok(UserProfileUpdateResponse(
-			message = Message.OK,
+			message = MessageConstant.OK,
 			user = getUserInfoModel(userInfo, true)
 		))
 	}
