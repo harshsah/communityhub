@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Field
 data class UserInfo(
 	@Id @Field(ID) val id: String,
 	@Field(PASSWORD) val password: String,
-	@Field(USER_INFO_DATA) val userInfoData: UserInfoData?,
-	@Field(USER_INFO_CONTACT) val userInfoContact: UserInfoContact?,
+	@Field(USER_INFO_DATA) val userInfoData: UserInfoData = UserInfoData(),
+	@Field(USER_INFO_CONTACT) val userInfoContact: UserInfoContact = UserInfoContact(),
 	@Field(CREATED) val created: Long,
 	@Field(UPDATED) val updated: Long,
 ) {

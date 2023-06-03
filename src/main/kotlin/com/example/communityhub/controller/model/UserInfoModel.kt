@@ -8,7 +8,7 @@ data class UserInfoModel(
 	val id: String,
 	val userInfoData: UserInfoDataModel,
 	@LoggingMaskInterior(classes = [UserInfoContactModel::class])
-	val userInfoContact: UserInfoContactModel? = null,
+	val userInfoContact: UserInfoContactModel,
 )
 
 open class UserInfoDataModel(
@@ -27,20 +27,24 @@ fun getUserInfoModel(userInfo: UserInfo, showPrivate: Boolean) = if (showPrivate
 	UserInfoModel(
 		id = userInfo.id,
 		userInfoData = UserInfoDataModel(
-			name = userInfo.userInfoData?.name,
-			iconImage = userInfo.userInfoData?.iconImage,
+			name = userInfo.userInfoData.name,
+			iconImage = userInfo.userInfoData.iconImage,
 		),
 		userInfoContact = UserInfoContactModel(
-			phone = userInfo.userInfoContact?.phone,
-			email = userInfo.userInfoContact?.email,
+			phone = userInfo.userInfoContact.phone,
+			email = userInfo.userInfoContact.email,
 		)
 	)
 } else {
 	UserInfoModel(
 		id = userInfo.id,
 		userInfoData = UserInfoDataModel(
-			name = userInfo.userInfoData?.name,
-			iconImage = userInfo.userInfoData?.iconImage,
+			name = userInfo.userInfoData.name,
+			iconImage = userInfo.userInfoData.iconImage,
+		),
+		userInfoContact = UserInfoContactModel(
+			phone = null,
+			email = null,
 		)
 	)
 }
