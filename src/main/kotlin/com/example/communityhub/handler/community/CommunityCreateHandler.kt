@@ -6,7 +6,9 @@ import com.example.communityhub.controller.model.getCommunityModel
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommunityDao
+import com.example.communityhub.dao.impl.CommunityJoinDao
 import com.example.communityhub.dao.model.Community
+import com.example.communityhub.dao.model.CommunityJoin
 import com.example.communityhub.exception.badRequestException
 import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
@@ -16,11 +18,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class CommunityCreateHandler(
-	val communityDao: CommunityDao,
-	val jwtService: JwtService,
+	private val communityDao: CommunityDao,
+	private val communityJoinDao: CommunityJoinDao,
+	private val jwtService: JwtService,
 ) : AbsHandler<CommunityCreateRequest, CommunityCreateResponse>(
 	apiName = "community create",
 	errorResponseSupplier = { CommunityCreateResponse() },
@@ -50,6 +54,15 @@ class CommunityCreateHandler(
 			updated = currentTimeMillis,
 		)
 		communityDao.insert(community)
+
+		val communityJoin = CommunityJoin(
+			id = UUID.randomUUID().toString(),
+			userId = userId,
+			communityId = communityId,
+			created = currentTimeMillis,
+			updated = currentTimeMillis,
+		)
+		communityJoinDao.insert(communityJoin)
 
 		return ResponseEntity.ok(CommunityCreateResponse(
 			message = MessageConstant.CREATED,
