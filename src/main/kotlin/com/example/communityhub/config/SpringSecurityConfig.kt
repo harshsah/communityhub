@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableMethodSecurity(prePostEnabled = true)
 class SpringSecurityConfig {
 	@Bean
-	@Throws(Exception::class)
 	fun filterChain(http: HttpSecurity): SecurityFilterChain {
 		return http
 			.csrf { it.disable() }
