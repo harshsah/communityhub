@@ -3,6 +3,7 @@ package com.example.communityhub.handler
 import com.example.communityhub.handler.comment.CommentCreateHandler
 import com.example.communityhub.handler.community.CommunityCreateHandler
 import com.example.communityhub.handler.community.CommunityGetHandler
+import com.example.communityhub.handler.community.CommunityJoinHandler
 import com.example.communityhub.handler.post.PostCreateHandler
 import com.example.communityhub.handler.upvote.UpvoteHandler
 import com.example.communityhub.handler.user.*
@@ -30,6 +31,7 @@ data class UserHandlers(
 data class CommunityHandlers(
 	val communityCreateHandler: CommunityCreateHandler,
 	val communityGetHandler: CommunityGetHandler,
+	val communityJoinHandler: CommunityJoinHandler,
 )
 
 @Component

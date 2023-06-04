@@ -40,7 +40,9 @@ class CommunityCreateHandler(
 		}
 
 		val communityId: String = request.data.id.lowercase()
-		communityDao.findById(communityId) ?: throw badRequestException(MessageConstant.COMMUNITY_ID_ALREADY_PRESENT)
+		if (communityDao.findById(communityId) != null) {
+			throw badRequestException(MessageConstant.COMMUNITY_ID_ALREADY_PRESENT)
+		}
 
 		val community = Community(
 			id = communityId,

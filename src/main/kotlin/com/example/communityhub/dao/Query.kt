@@ -27,6 +27,8 @@ interface Query<T, V> {
 	suspend fun findAll(): List<V>
 	suspend fun count(): Long
 	suspend fun updateOne(updateMap: Map<String, Any?>): Boolean
+	suspend fun deleteOne(): Boolean
+	suspend fun deleteAll(): Boolean
 
 }
 
@@ -138,6 +140,19 @@ internal class QueryImpl<T, V>(
 		val update = generateUpdateMap(updateMap)
 		val updateResult = mongoTemplate.updateFirst(query, update, clazz)
 		return updateResult.modifiedCount > 0
+	}
+
+	override suspend fun deleteOne(): Boolean {
+		val query = generateQuery()
+		query.limit(1)
+		val remove = mongoTemplate.findAndRemove(query, clazz)
+		return remove != null
+	}
+
+	override suspend fun deleteAll(): Boolean {
+		val query = generateQuery(useSort = true, useSkipLimit = true)
+		val deleteResult = mongoTemplate.remove(query, clazz)
+		return deleteResult.deletedCount > 0
 	}
 
 	private fun generateUpdateMap(updateMap: Map<String, Any?>): Update {

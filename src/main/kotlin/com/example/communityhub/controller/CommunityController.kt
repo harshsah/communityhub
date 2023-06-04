@@ -1,9 +1,7 @@
 package com.example.communityhub.controller
 
 import com.example.communityhub.handler.Handlers
-import com.example.communityhub.handler.community.CommunityCreateRequest
-import com.example.communityhub.handler.community.CommunityCreateRequestData
-import com.example.communityhub.handler.community.CommunityGetRequest
+import com.example.communityhub.handler.community.*
 import com.example.communityhub.utils.HeaderUtils
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.*
@@ -27,4 +25,15 @@ class CommunityController (
 	@GetMapping("/{communityId}")
 	fun communityGet(@PathVariable("communityId") communityId: String) = handlers
 		.communityHandlers.communityGetHandler.handle(CommunityGetRequest(communityId))
+
+
+	@PostMapping("/leave/community")
+	fun communityJoin(
+		servletRequest: HttpServletRequest,
+		@RequestBody requestData: CommunityJoinRequestData,
+	) = handlers.communityHandlers.communityJoinHandler
+		.handle(CommunityJoinRequest(
+			httpHeaders = HeaderUtils.getHeaders(servletRequest),
+			data = requestData,
+		))
 }
