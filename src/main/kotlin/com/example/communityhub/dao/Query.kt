@@ -15,7 +15,6 @@ interface Query<T, V> {
 	fun caseInSensitive(field: String?, value: String?): Query<T, V>
 	fun lte(field: String?, value: Long?): Query<T, V>
 	fun gte(field: String?, value: Long?): Query<T, V>
-
 	fun skip(skip: Long): Query<T, V>
 	fun limit(limit: Int): Query<T, V>
 
@@ -29,7 +28,6 @@ interface Query<T, V> {
 	suspend fun updateOne(updateMap: Map<String, Any?>): Boolean
 	suspend fun deleteOne(): Boolean
 	suspend fun deleteAll(): Boolean
-
 }
 
 internal class QueryImpl<T, V>(
