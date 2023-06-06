@@ -1,6 +1,7 @@
 package com.example.communityhub.handler
 
 import com.example.communityhub.handler.comment.CommentCreateHandler
+import com.example.communityhub.handler.comment.CommentListHandler
 import com.example.communityhub.handler.community.CommunityCreateHandler
 import com.example.communityhub.handler.community.CommunityGetHandler
 import com.example.communityhub.handler.community.CommunityJoinHandler
@@ -42,6 +43,7 @@ data class PostHandlers(
 @Component
 data class CommentHandlers(
 	val commentCreateHandler: CommentCreateHandler,
+	val commentListHandler: CommentListHandler,
 )
 
 @Component

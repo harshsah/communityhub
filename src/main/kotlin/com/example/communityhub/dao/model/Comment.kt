@@ -20,11 +20,14 @@ data class Comment(
 	companion object {
 		private const val ID = "_id"
 		private const val CONTENT = "content"
-		private const val POST_ID = "postId"
-		private const val USER_ID = "userId"
+		const val POST_ID = "postId"
+		const val USER_ID = "userId"
 		private const val PARENT_ID = "parentId"
 		private const val UPVOTE = "upvote"
 		private const val CREATED = "created"
 		private const val UPDATED = "updated"
+
+		val VALID_SORT_PROPERTIES = listOf(CREATED, UPDATED)
+		const val DEFAULT_SORT_PROPERTY = CREATED
 	}
 }

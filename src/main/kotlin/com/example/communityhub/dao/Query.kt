@@ -21,7 +21,7 @@ interface Query<T, V> {
 	/**
 	 * @param value: 1 or -1
 	 */
-	fun sort(field: String?, value: Byte): Query<T, V>
+	fun sort(field: String?, value: Int): Query<T, V>
 	suspend fun findOne(): V?
 	suspend fun findAll(): List<V>
 	suspend fun count(): Long
@@ -113,7 +113,7 @@ internal class QueryImpl<T, V>(
 		return this
 	}
 
-	override fun sort(field: String?, value: Byte): Query<T, V> {
+	override fun sort(field: String?, value: Int): Query<T, V> {
 		if (!field.isNullOrEmpty()) {
 			when (value.toInt()) {
 				1 -> sortMap[field] = Sort.Direction.ASC
