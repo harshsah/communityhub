@@ -20,10 +20,14 @@ data class Post (
 		private const val ID = "_id"
 		private const val TITLE = "title"
 		private const val CONTENT = "content"
-		private const val USER_ID = "userId"
-		private const val COMMUNITY_ID = "communityId"
+		const val USER_ID = "userId"
+		const val COMMUNITY_ID = "communityId"
 		private const val UPVOTE = "upvote"
 		private const val CREATED = "created"
 		private const val UPDATED = "updated"
+
+		val VALID_SORT_PROPERTIES = listOf(CREATED, UPVOTE)
+		const val DEFAULT_SORT_PROPERTY = CREATED
+
 	}
 }

@@ -6,6 +6,7 @@ import com.example.communityhub.handler.community.CommunityCreateHandler
 import com.example.communityhub.handler.community.CommunityGetHandler
 import com.example.communityhub.handler.community.CommunityJoinHandler
 import com.example.communityhub.handler.post.PostCreateHandler
+import com.example.communityhub.handler.post.PostListHandler
 import com.example.communityhub.handler.upvote.UpvoteHandler
 import com.example.communityhub.handler.user.*
 import org.springframework.stereotype.Component
@@ -38,6 +39,7 @@ data class CommunityHandlers(
 @Component
 data class PostHandlers(
 	val postCreateHandler: PostCreateHandler,
+	val postListHandler: PostListHandler,
 )
 
 @Component
