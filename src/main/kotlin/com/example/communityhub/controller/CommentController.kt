@@ -3,10 +3,7 @@ package com.example.communityhub.controller
 import com.example.communityhub.constant.PageConstant
 import com.example.communityhub.dao.model.Comment
 import com.example.communityhub.handler.Handlers
-import com.example.communityhub.handler.comment.CommentCreateRequest
-import com.example.communityhub.handler.comment.CommentCreateRequestData
-import com.example.communityhub.handler.comment.CommentGetRequest
-import com.example.communityhub.handler.comment.CommentListRequest
+import com.example.communityhub.handler.comment.*
 import com.example.communityhub.utils.HeaderUtils
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.*
@@ -28,7 +25,7 @@ class CommentController (
 			data = requestData,
 		))
 
-	@GetMapping("/list/all")
+	@GetMapping("/list")
 	fun commentList(
 		@RequestParam(name = "postId", required = false) postId: String?,
 		@RequestParam(name = "userId", required = false) userId: String?,
@@ -46,8 +43,18 @@ class CommentController (
 			sortDirection = sortDirection ?: -1,
 		))
 
-	@GetMapping("/{commentId}")
-	fun commentGet(@PathVariable("commentId") commentId: String) = handlers.commentHandlers.commentGetHandler
+	@GetMapping("")
+	fun commentGet(@RequestParam("id") commentId: String) = handlers.commentHandlers.commentGetHandler
 		.handle(CommentGetRequest(commentId))
+
+	@PostMapping("/delete")
+	fun commentDelete(
+		servletRequest: HttpServletRequest,
+		@RequestBody requestData: CommentDeleteRequestData,
+	) = handlers.commentHandlers.commentDeleteHandler
+		.handle(CommentDeleteRequest(
+			httpHeaders = HeaderUtils.getHeaders(servletRequest),
+			data = requestData,
+		))
 
 }

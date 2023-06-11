@@ -19,10 +19,7 @@ class CommentGetHandler(
 ){
 	override suspend fun perform(request: CommentGetRequest): ResponseEntity<CommentGetResponse> {
 		val comment = commentDao.findById(request.commentId)
-			?: return ResponseEntity.ok(CommentGetResponse(
-				message = MessageConstant.COMMENT_NOT_FOUND,
-				comment = null
-			))
+			?: return ResponseEntity.noContent().build()
 		return ResponseEntity.ok(CommentGetResponse(
 			message = MessageConstant.OK,
 			comment = getCommentModel(comment)
@@ -40,4 +37,3 @@ data class CommentGetResponse(
 	override var message: String? = null,
 	val comment: CommentModel? = null
 ) : BaseResponse(message)
-

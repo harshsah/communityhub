@@ -6,6 +6,7 @@ object MessageConstant {
 	const val UNAUTHORIZED = "Unauthorized"
 	const val SOMETHING_WENT_WRONG = "Something went wrong"
 	const val INVALID_REQUEST = "Invalid Request"
+	const val DELETED = "deleted"
 
 	const val USER_ALREADY_PRESENT = "User Already Present"
 	const val USER_NOT_FOUND = "User Not Found"

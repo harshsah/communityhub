@@ -12,7 +12,6 @@ import com.example.communityhub.exception.badRequestException
 import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.service.JwtService
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -32,8 +31,9 @@ class CommentCreateHandler(
 		val userId = jwtService.verifyToken(request.httpHeaders).id
 		val content = request.data.content?.takeIf { it.isNotEmpty() }
 			?: throw badRequestException(MessageConstant.INVALID_REQUEST)
-		val postId = request.data.postId?.takeIf { it.isNotEmpty() && postDao.existsById(it)}
+		val postId = request.data.postId?.takeIf { it.isNotEmpty() }
 			?: throw badRequestException(MessageConstant.POST_NOT_FOUND)
+		val post = postDao.findById(postId) ?: throw badRequestException(MessageConstant.POST_NOT_FOUND)
 		val parentId = request.data.parentId?.let {
 			if (!commentDao.existsById(it)) {
 				throw badRequestException(MessageConstant.PARENT_COMMENT_NOT_FOUND)
@@ -45,6 +45,7 @@ class CommentCreateHandler(
 			id = UUID.randomUUID().toString(),
 			content = content,
 			postId = postId,
+			communityId = post.communityId,
 			userId = userId,
 			parentId = parentId,
 			created = currentTimeMillis,
@@ -59,7 +60,6 @@ class CommentCreateHandler(
 }
 
 data class CommentCreateRequest(
-	@JsonIgnore
 	@LoggingGsonExclude
 	override val httpHeaders: HttpHeaders = HttpHeaders(),
 	val data: CommentCreateRequestData,

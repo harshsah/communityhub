@@ -10,6 +10,7 @@ data class Comment(
 	@Id @Field(ID) val id: String,
 	@Field(CONTENT) val content: String,
 	@Field(POST_ID) val postId: String,
+	@Field(COMMUNITY_ID) val communityId: String,
 	@Field(USER_ID) val userId: String,
 	@Field(PARENT_ID) val parentId: String?, // if null then no comment parent
 	@Field(UPVOTE) val upvote: Long = 0L,
@@ -18,14 +19,15 @@ data class Comment(
 ){
 
 	companion object {
-		private const val ID = "_id"
-		private const val CONTENT = "content"
+		const val ID = "_id"
+		const val CONTENT = "content"
 		const val POST_ID = "postId"
+		private const val COMMUNITY_ID = "communityId"
 		const val USER_ID = "userId"
 		private const val PARENT_ID = "parentId"
 		private const val UPVOTE = "upvote"
 		private const val CREATED = "created"
-		private const val UPDATED = "updated"
+		const val UPDATED = "updated"
 
 		val VALID_SORT_PROPERTIES = listOf(CREATED, UPDATED)
 		const val DEFAULT_SORT_PROPERTY = CREATED
