@@ -28,6 +28,7 @@ interface Query<T, V> {
 	suspend fun updateOne(updateMap: Map<String, Any?>): Boolean
 	suspend fun deleteOne(): Boolean
 	suspend fun deleteAll(): Boolean
+	suspend fun exists(): Boolean
 }
 
 internal class QueryImpl<T, V>(
@@ -152,6 +153,8 @@ internal class QueryImpl<T, V>(
 		val deleteResult = mongoTemplate.remove(query, clazz)
 		return deleteResult.deletedCount > 0
 	}
+
+	override suspend fun exists(): Boolean = mongoTemplate.exists(generateQuery(), clazz)
 
 	private fun generateUpdateMap(updateMap: Map<String, Any?>): Update {
 		val update = Update()

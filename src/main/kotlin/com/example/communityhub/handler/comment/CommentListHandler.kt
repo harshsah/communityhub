@@ -9,6 +9,7 @@ import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommentDao
 import com.example.communityhub.dao.model.Comment
 import com.example.communityhub.handler.AbsHandler
+import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.utils.PageUtils
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component
 class CommentListHandler(
 	private val commentDao: CommentDao,
 ) : AbsHandler<CommentListRequest, CommentListResponse>(
-	apiName = "comment user",
+	apiName = "comment list",
 	errorResponseSupplier = { CommentListResponse() }
 ) {
 	override suspend fun perform(request: CommentListRequest): ResponseEntity<CommentListResponse> {
@@ -69,6 +70,7 @@ data class CommentListRequest(
 ) : BaseRequest()
 
 data class CommentListResponse(
+	@LoggingGsonExclude
 	override var message: String? = null,
 	val page: PageModel<CommentModel>? = null,
 ) : BaseResponse(message)

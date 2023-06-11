@@ -17,7 +17,7 @@ class PostController (
 	private val handlers: Handlers,
 ) {
 
-	@PostMapping("/new/create")
+	@PostMapping("")
 	fun postCreate(
 		servletRequest: HttpServletRequest,
 		@RequestBody requestData: PostCreateRequestData

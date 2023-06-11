@@ -7,22 +7,22 @@ Demo Project for Spring boot kotlin
 - [ ] User Profiles: Create user profile pages to showcase user interests, activities, and contributions.
 
 - [x] Create Communities: Allow users to create their own communities based on specific topics, interests, or themes.
-- [ ] Join/Leave Communities: Implement the ability for users to join or leave communities based on their preferences.
+- [x] Join/Leave Communities: Implement the ability for users to join or leave communities based on their preferences.
 - [ ] Community Discovery: Develop features to help users discover new communities based on interests, popularity, and recommendations.
 
-- [ ] Create Posts: Enable users to create posts within communities, supporting various media types.
-- [ ] Upvote/Downvote System: Implement functionality for users to upvote or downvote posts and comments.
+- [x] Create Posts: Enable users to create posts within communities, supporting various media types.
+- [x] Upvote/Downvote System: Implement functionality for users to upvote or downvote posts and comments.
 - [ ] Content Moderation: Develop moderation tools to ensure a respectful and engaging community environment.
 
-- [ ] Commenting System: Implement the ability for users to post comments on community posts.
-- [ ] Threaded Discussions: Enable threaded discussions by allowing users to reply to comments.
+- [x] Commenting System: Implement the ability for users to post comments on community posts.
+- [x] Threaded Discussions: Enable threaded discussions by allowing users to reply to comments.
 - [ ] Notifications: Implement notifications to alert users about new comments or replies.
 
 - [ ] Search Functionality: Enable users to search for communities, posts, and users based on keywords.
 - [ ] Trending and Popular Content: Highlight trending and popular posts, communities, and discussions.
 
 - [ ] User Interactions: Implement features for users to follow other users, like posts, and bookmark content.
-- [ ] Private Messaging: Enable users to send private messages and communicate securely.
+- [x] Private Messaging: Enable users to send private messages and communicate securely.
 
 - [ ] Community Analytics: Provide community moderators with insights and analytics on growth, engagement, and user activity.
 - [ ] User Activity Tracking: Track user activity and provide personalized recommendations.

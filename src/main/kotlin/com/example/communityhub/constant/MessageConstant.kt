@@ -17,4 +17,5 @@ object MessageConstant {
 	const val POST_NOT_FOUND = "post not found"
 
 	const val PARENT_COMMENT_NOT_FOUND = "parent comment not found"
+	const val COMMENT_NOT_FOUND = "comment not found"
 }

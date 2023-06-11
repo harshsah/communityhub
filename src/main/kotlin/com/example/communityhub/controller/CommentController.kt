@@ -5,6 +5,7 @@ import com.example.communityhub.dao.model.Comment
 import com.example.communityhub.handler.Handlers
 import com.example.communityhub.handler.comment.CommentCreateRequest
 import com.example.communityhub.handler.comment.CommentCreateRequestData
+import com.example.communityhub.handler.comment.CommentGetRequest
 import com.example.communityhub.handler.comment.CommentListRequest
 import com.example.communityhub.utils.HeaderUtils
 import jakarta.servlet.http.HttpServletRequest
@@ -17,7 +18,7 @@ class CommentController (
 	private val handlers: Handlers,
 ) {
 
-	@PostMapping("/create/new")
+	@PostMapping("")
 	fun commentCreate(
 		servletRequest: HttpServletRequest,
 		@RequestBody requestData: CommentCreateRequestData,
@@ -27,12 +28,12 @@ class CommentController (
 			data = requestData,
 		))
 
-	@GetMapping("/list")
+	@GetMapping("/list/all")
 	fun commentList(
 		@RequestParam(name = "postId", required = false) postId: String?,
 		@RequestParam(name = "userId", required = false) userId: String?,
 		@RequestParam(name = "pageNumber", required = false) pageNumber: Long?,
-		@RequestParam(name = "pageNumber", required = false) pageSize: Int?,
+		@RequestParam(name = "pageSize", required = false) pageSize: Int?,
 		@RequestParam(name = "sortProperty", required = false) sortProperty: String?,
 		@RequestParam(name = "sortDirection", required = false) sortDirection: Int?,
 	) = handlers.commentHandlers.commentListHandler
@@ -44,4 +45,9 @@ class CommentController (
 			sortProperty = sortProperty ?: Comment.DEFAULT_SORT_PROPERTY,
 			sortDirection = sortDirection ?: -1,
 		))
+
+	@GetMapping("/{commentId}")
+	fun commentGet(@PathVariable("commentId") commentId: String) = handlers.commentHandlers.commentGetHandler
+		.handle(CommentGetRequest(commentId))
+
 }

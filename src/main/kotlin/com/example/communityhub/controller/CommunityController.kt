@@ -27,7 +27,7 @@ class CommunityController (
 		.communityHandlers.communityGetHandler.handle(CommunityGetRequest(communityId))
 
 
-	@PostMapping("/leave/community")
+	@PostMapping("/join/community")
 	fun communityJoin(
 		servletRequest: HttpServletRequest,
 		@RequestBody requestData: CommunityJoinRequestData,

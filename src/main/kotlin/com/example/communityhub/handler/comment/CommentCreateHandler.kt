@@ -1,6 +1,8 @@
 package com.example.communityhub.handler.comment
 
 import com.example.communityhub.constant.MessageConstant
+import com.example.communityhub.controller.model.CommentModel
+import com.example.communityhub.controller.model.getCommentModel
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommentDao
@@ -49,7 +51,10 @@ class CommentCreateHandler(
 			updated = currentTimeMillis,
 		)
 		commentDao.insert(comment)
-		return ResponseEntity.ok(CommentCreateResponse(MessageConstant.OK))
+		return ResponseEntity.ok(CommentCreateResponse(
+			message = MessageConstant.OK,
+			comment = getCommentModel(comment)
+		))
 	}
 }
 
@@ -68,5 +73,6 @@ data class CommentCreateRequestData(
 
 data class CommentCreateResponse(
 	@LoggingGsonExclude
-	override var message: String? = null
+	override var message: String? = null,
+	val comment: CommentModel? = null
 ) : BaseResponse(message)
