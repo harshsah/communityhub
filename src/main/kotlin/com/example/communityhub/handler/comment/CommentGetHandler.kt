@@ -2,7 +2,7 @@ package com.example.communityhub.handler.comment
 
 import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.CommentModel
-import com.example.communityhub.controller.model.getCommentModel
+import com.example.communityhub.controller.model.toModel
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommentDao
 import com.example.communityhub.handler.AbsHandler
@@ -22,7 +22,7 @@ class CommentGetHandler(
 			?: return ResponseEntity.noContent().build()
 		return ResponseEntity.ok(CommentGetResponse(
 			message = MessageConstant.OK,
-			comment = getCommentModel(comment)
+			comment = comment.toModel()
 		))
 	}
 

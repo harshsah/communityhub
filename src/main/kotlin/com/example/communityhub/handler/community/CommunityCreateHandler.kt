@@ -13,7 +13,7 @@ import com.example.communityhub.exception.badRequestException
 import com.example.communityhub.handler.AbsHandler
 import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.service.JwtService
-import com.example.communityhub.utils.StringUtils.isAlphaNumeric
+import com.example.communityhub.utils.isAlphaNumeric
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity

@@ -12,7 +12,7 @@ import com.example.communityhub.logging.LoggingGsonExclude
 import com.example.communityhub.logging.LoggingMask
 import com.example.communityhub.service.JwtService
 import com.example.communityhub.service.SessionInfo
-import com.example.communityhub.utils.StringUtils.isAlphaNumeric
+import com.example.communityhub.utils.isAlphaNumeric
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component

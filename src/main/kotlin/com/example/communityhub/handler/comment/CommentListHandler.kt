@@ -3,7 +3,7 @@ package com.example.communityhub.handler.comment
 import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.model.CommentModel
 import com.example.communityhub.controller.model.PageModel
-import com.example.communityhub.controller.model.getCommentModel
+import com.example.communityhub.controller.model.toModel
 import com.example.communityhub.controller.request.BaseRequest
 import com.example.communityhub.controller.response.BaseResponse
 import com.example.communityhub.dao.impl.CommentDao
@@ -40,7 +40,7 @@ class CommentListHandler(
 		} else {
 			listOf()
 		}
-		val responseList = commentList.map { getCommentModel(it) }
+		val responseList = commentList.map { it.toModel() }
 		return ResponseEntity.ok(CommentListResponse(
 			message = MessageConstant.OK,
 			page = PageModel(

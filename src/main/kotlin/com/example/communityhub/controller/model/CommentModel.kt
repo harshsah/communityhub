@@ -12,12 +12,12 @@ data class CommentModel(
 	val upvote: Long,
 )
 
-fun getCommentModel(comment: Comment) = CommentModel(
-	id = comment.id,
-	content = comment.content,
-	userId = comment.userId,
-	postId = comment.postId,
-	communityId = comment.communityId,
-	parentId = comment.postId,
-	upvote = comment.upvote,
+fun Comment.toModel() =  CommentModel(
+	id = this.id,
+	content = this.content,
+	userId = this.userId,
+	postId = this.postId,
+	communityId = this.communityId,
+	parentId = this.postId,
+	upvote = this.upvote,
 )
