@@ -2,6 +2,7 @@ package com.example.communityhub.exception
 
 import com.example.communityhub.constant.MessageConstant
 import com.example.communityhub.controller.response.BaseResponse
+import org.slf4j.event.Level
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity
 class ServerException(
 	val httpStatusCode: HttpStatusCode,
 	val clientMessage: String? = null,
+	val level: Level = Level.ERROR,
 	override val message: String? = clientMessage,
 	override val cause: Throwable? = null,
 ):Exception(message, cause) {
@@ -26,18 +28,22 @@ fun badRequestException(
 	clientMessage: String? = MessageConstant.SOMETHING_WENT_WRONG,
 	message: String? = clientMessage,
 	cause: Throwable? = null,
+	level: Level? = null,
 ) = ServerException(
 	httpStatusCode = HttpStatus.BAD_REQUEST,
 	clientMessage = clientMessage,
+	level = level ?: Level.ERROR,
 	message = message,
 	cause = cause,
 )
 
 fun unauthorizedException(
-	cause: Throwable? = null
+	cause: Throwable? = null,
+	level: Level? = null,
 ) = ServerException(
 	httpStatusCode = HttpStatus.UNAUTHORIZED,
 	clientMessage = MessageConstant.UNAUTHORIZED,
+	level = level ?: Level.ERROR,
 	cause = cause
 )
 
@@ -45,9 +51,11 @@ fun internalServerErrorException(
 	clientMessage: String? = MessageConstant.SOMETHING_WENT_WRONG,
 	message: String? = clientMessage,
 	cause: Throwable? = null,
+	level: Level? = null,
 ) = ServerException(
 	httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR,
 	clientMessage = clientMessage,
+	level = level ?: Level.ERROR,
 	message = message,
 	cause = cause,
 )

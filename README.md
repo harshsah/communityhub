@@ -22,7 +22,7 @@ Demo Project for Spring boot kotlin
 - [ ] Trending and Popular Content: Highlight trending and popular posts, communities, and discussions.
 
 - [ ] User Interactions: Implement features for users to follow other users, like posts, and bookmark content.
-- [x] Private Messaging: Enable users to send private messages and communicate securely.
+- [ ] Private Messaging: Enable users to send private messages and communicate securely.
 
 - [ ] Community Analytics: Provide community moderators with insights and analytics on growth, engagement, and user activity.
 - [ ] User Activity Tracking: Track user activity and provide personalized recommendations.

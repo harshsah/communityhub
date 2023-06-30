@@ -26,10 +26,13 @@ class UserLoginHandler(
 
 	override suspend fun perform(request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
 
-		val id = request.id?.lowercase() ?: throw badRequestException(MessageConstant.INVALID_REQUEST)
-		val password = request.password ?: throw badRequestException(MessageConstant.INVALID_REQUEST)
+		val id = request.id?.lowercase()
+			?: throw badRequestException(MessageConstant.INVALID_REQUEST)
+		val password = request.password
+			?: throw badRequestException(MessageConstant.INVALID_REQUEST)
 
-		val userInfo = userInfoDao.findById(id) ?: throw badRequestException(MessageConstant.USER_NOT_FOUND)
+		val userInfo = userInfoDao.findById(id)
+			?: return ResponseEntity.badRequest().body(UserLoginResponse(message = MessageConstant.USER_NOT_FOUND))
 
 		if (!passwordEncoder.matches(password, userInfo.password)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

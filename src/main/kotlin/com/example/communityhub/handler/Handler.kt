@@ -60,16 +60,17 @@ data class LogDTO<T,V>(
 	val exception: ServerException?
 ) {
 	fun log(handler: AbsHandler<T, V>) {
-		if (!handler.log.isEnabledForLevel(handler.logLevel)) {
+		val level = exception?.level ?: handler.logLevel
+		if (!handler.log.isEnabledForLevel(level)) {
 			return
 		}
 		handler.log
-			.atLevel(handler.logLevel)
+			.atLevel(level)
 			.log("""
 				API Interceptor, ${handler.apiName} api
 					request: ${maskAsJson(request)},
 					response: ${maskAsJson(responseEntity, responseEntityMaskFieldWithBody(responseEntity?.body, handler.responseMaskFields))}
-					exceptionProduced: ${exception != null}
+					exceptionProduced: $exception != null
 					exception: 
 			""".trimIndent(), exception)
 	}

@@ -37,7 +37,7 @@ class UserSignupHandler (
 			throw badRequestException(MessageConstant.INVALID_REQUEST)
 		}
 		if (userInfoDao.existsById(id)) {
-			throw badRequestException(MessageConstant.USER_ALREADY_PRESENT)
+			throw badRequestException(MessageConstant.USER_ALREADY_PRESENT, level = this.logLevel)
 		}
 
 		val currentTimeMillis = System.currentTimeMillis()
