@@ -1,5 +1,5 @@
 # CommunityHub
-Demo Project for Spring boot kotlin
+A Spring boot Kotlin Project
 
 # Backend Tasks:
 - [x] User Registration: Implement the functionality for users to create an account with a unique userId and password.
